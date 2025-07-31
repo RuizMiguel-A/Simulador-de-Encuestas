@@ -63,7 +63,6 @@ def crear_encuesta(request):
             formset = OpcionFormSet(request.POST, instance=pregunta)
 
             if formset.is_valid():
-                # Guarda el formset de opciones y redirige
                 formset.save()
                 return redirect('home')
         
