@@ -9,7 +9,29 @@ h1 {
   margin-bottom: 15px;
 }
 
-div {
+.text-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+li{
+  flex: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.089);
+  color: white;
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  margin: 10px 0px 10px 0px;
+  list-style-type: none;
+}
+
+ul {
+  padding-inline-start: 0; /* o el valor que quieras */
+}
+
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +57,3 @@ a:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(246, 79, 89, 0.4);
 }
-
