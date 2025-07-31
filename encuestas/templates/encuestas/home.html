@@ -1,0 +1,8 @@
+<h1>Encuestas Disponibles</h1>
+<ul>
+  {% for encuesta in encuestas %}
+    <li><a href="{% url 'responder_encuesta' encuesta.id %}">{{ encuesta.titulo }}</a></li>
+  {% empty %}
+    <li>No hay encuestas disponibles</li>
+  {% endfor %}
+</ul>

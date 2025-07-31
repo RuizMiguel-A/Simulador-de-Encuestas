@@ -1,0 +1,17 @@
+<h2>{{ encuesta.titulo }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {% for pregunta in preguntas %}
+    <div>
+      <p><strong>{{ pregunta.texto }}</strong></p>
+      {% for opcion in pregunta.opciones.all %}
+        <label>
+          <input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}">
+          {{ opcion.texto }}
+        </label><br>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  <button type="submit">Enviar</button>
+</form>
+
