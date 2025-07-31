@@ -10,7 +10,6 @@ class EncuestaForm(forms.ModelForm):
 class PreguntaForm(forms.ModelForm):
     class Meta:
         model = Pregunta
-        # Se ha corregido el nombre del campo de 'texto_pregunta' a 'texto'.
         fields = ['texto']
 
 class OpcionForm(forms.ModelForm):
