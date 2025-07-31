@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Encuesta, Pregunta, Opcion, Respuesta
-# Se corrige la importación para que OpcionFormSet no se importe de forms.py
 from .forms import EncuestaForm, PreguntaForm
 from django.forms import inlineformset_factory
 
@@ -43,14 +42,10 @@ def resultados_encuesta(request, encuesta_id):
 
     return render(request, 'encuestas/resultados.html', {'encuesta': encuesta, 'resultados': resultados})
 
-# Definir el Formset para las opciones.
-# `Opcion` es el modelo de opciones, `Pregunta` es el modelo padre.
-# `extra=1` significa que mostrará un formulario extra vacío.
-# `max_num=4` establece el número máximo de opciones por pregunta.
 OpcionFormSet = inlineformset_factory(Pregunta, Opcion, fields=['texto'], extra=1, max_num=4)
 
 
-# Nueva función para crear una encuesta
+#función para crear una encuesta
 def crear_encuesta(request):
     if request.method == 'POST':
         form = EncuestaForm(request.POST)
