@@ -1,8 +1,11 @@
-<h2>{{ encuesta.titulo }}</h2>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/responder.css' %}">
+
+<h1>{{ encuesta.titulo }}</h2>
 <form method="post">
   {% csrf_token %}
   {% for pregunta in preguntas %}
-    <div>
+    <div class="preguntas">
       <p><strong>{{ pregunta.texto }}</strong></p>
       {% for opcion in pregunta.opciones.all %}
         <label>
@@ -14,4 +17,3 @@
   {% endfor %}
   <button type="submit">Enviar</button>
 </form>
-
