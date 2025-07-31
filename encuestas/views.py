@@ -17,9 +17,7 @@ def responder_encuesta(request, encuesta_id):
                 Respuesta.objects.create(pregunta=pregunta, opcion=opcion)
                 opcion.votos += 1  
                 opcion.save()
-        return redirect('resultados_encuesta', encuesta_id=encuesta.id)
-
-    return render(request, 'encuestas/responder.html', {'encuesta': encuesta, 'preguntas': preguntas})
+request, 'encuestas/responder.html', {'encuesta': encuesta, 'preguntas': preguntas})
 
 def resultados_encuesta(request, encuesta_id):
     encuesta = get_object_or_404(Encuesta, pk=encuesta_id)

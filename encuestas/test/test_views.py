@@ -23,7 +23,7 @@ def test_responder_encuesta_view():
     client = Client()
     url = reverse('responder_encuesta', args=[encuesta.id])
     
-    # Simular respuesta a encuesta
+    # Simulacion de la respuesta a una encuesta
     response = client.post(url, {f'pregunta_{pregunta.id}': opcion1.id})
 
     # Comprobar redirección
