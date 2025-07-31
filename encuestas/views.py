@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Encuesta, Pregunta, Opcion, Respuesta 
+from .models import Encuesta, Pregunta, Opcion, Respuesta
+# Se corrige la importación para que OpcionFormSet no se importe de forms.py
+from .forms import EncuestaForm, PreguntaForm
+from django.forms import inlineformset_factory
 
 def home(request):
     encuestas = Encuesta.objects.all()
@@ -15,7 +18,7 @@ def responder_encuesta(request, encuesta_id):
             if opcion_id:
                 opcion = get_object_or_404(Opcion, pk=opcion_id)
                 Respuesta.objects.create(pregunta=pregunta, opcion=opcion)
-                opcion.votos += 1  
+                opcion.votos += 1
                 opcion.save()
         return redirect('resultados_encuesta', encuesta_id=encuesta.id)
 
@@ -39,3 +42,45 @@ def resultados_encuesta(request, encuesta_id):
         })
 
     return render(request, 'encuestas/resultados.html', {'encuesta': encuesta, 'resultados': resultados})
+
+# Definir el Formset para las opciones.
+# `Opcion` es el modelo de opciones, `Pregunta` es el modelo padre.
+# `extra=1` significa que mostrará un formulario extra vacío.
+# `max_num=4` establece el número máximo de opciones por pregunta.
+OpcionFormSet = inlineformset_factory(Pregunta, Opcion, fields=['texto'], extra=1, max_num=4)
+
+
+# Nueva función para crear una encuesta
+def crear_encuesta(request):
+    if request.method == 'POST':
+        form = EncuestaForm(request.POST)
+        pregunta_form = PreguntaForm(request.POST)
+        
+        # Validar ambos formularios antes de crear el formset
+        if form.is_valid() and pregunta_form.is_valid():
+            # Guarda la encuesta y la pregunta solo si ambos formularios son válidos
+            encuesta = form.save()
+            pregunta = pregunta_form.save(commit=False)
+            pregunta.encuesta = encuesta
+            pregunta.save()
+
+            # Crea una instancia del formset de opciones con la instancia de la pregunta
+            formset = OpcionFormSet(request.POST, instance=pregunta)
+
+            if formset.is_valid():
+                # Guarda el formset de opciones y redirige
+                formset.save()
+                return redirect('home')
+        
+        # Si alguno de los formularios no es válido, renderiza la plantilla con los errores
+        else:
+            formset = OpcionFormSet(request.POST, instance=pregunta_form.instance if pregunta_form.is_valid() else None)
+            return render(request, 'encuestas/crear_encuesta.html', {'form': form, 'pregunta_form': pregunta_form, 'formset': formset})
+
+    else:
+        # En una petición GET, se crean los formularios vacíos
+        form = EncuestaForm()
+        pregunta_form = PreguntaForm()
+        formset = OpcionFormSet()
+
+    return render(request, 'encuestas/crear_encuesta.html', {'form': form, 'pregunta_form': pregunta_form, 'formset': formset})
