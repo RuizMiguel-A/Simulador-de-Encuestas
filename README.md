@@ -93,7 +93,7 @@ Aquí se detallan las funcionalidades principales del simulador desde la perspec
 * Guarda la encuesta en JSON o base de datos.
 * Muestra mensaje de confirmación al guardar.
 
-⏳ *Estado:* `Proceso`
+⏳ *Estado:* `Completo`
 
 ---
 
@@ -107,7 +107,7 @@ Aquí se detallan las funcionalidades principales del simulador desde la perspec
 * Se impide el envío si no se responde a todas las preguntas.
 * Al finalizar, se muestra mensaje de agradecimiento.
 
-⏳ *Estado:* `Proceso`
+⏳ *Estado:* `Completo`
 
 ---
 
@@ -121,7 +121,7 @@ Aquí se detallan las funcionalidades principales del simulador desde la perspec
 * El total de votos y porcentaje por opción se actualiza dinámicamente.
 * No se permite votar nuevamente en la misma sesión.
 
-⏳ *Estado:* `Proceso`
+⏳ *Estado:* `Completo`
 
 ---
 
