@@ -1,4 +1,4 @@
-# crear_encuestas.py
+# crear_encuestas
 import os
 import django
 
